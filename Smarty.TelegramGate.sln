@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.TelegramGate.Domain", "Smarty.TelegramGate.Domain\Smarty.TelegramGate.Domain.csproj", "{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.TelegramGate.Domain.Tests", "Smarty.TelegramGate.Domain.Tests\Smarty.TelegramGate.Domain.Tests.csproj", "{C22EB51D-F233-4584-BB98-3F21D72ABB96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|x64.Build.0 = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Debug|x86.Build.0 = Debug|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|x64.ActiveCfg = Release|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|x64.Build.0 = Release|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|x86.ActiveCfg = Release|Any CPU
+		{4ABE4ABA-652C-497E-94FF-DC2C55F3F96C}.Release|x86.Build.0 = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|x64.Build.0 = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Debug|x86.Build.0 = Debug|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|x64.ActiveCfg = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|x64.Build.0 = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|x86.ActiveCfg = Release|Any CPU
+		{C22EB51D-F233-4584-BB98-3F21D72ABB96}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
