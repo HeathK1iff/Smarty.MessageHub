@@ -2,10 +2,14 @@
 using Smarty.TelegramGate.Domain.Services;
 using Smarty.TelegramGate.Infrastructure;
 
-var serviceCollection = Host.CreateApplicationBuilder(args);
-serviceCollection.Services.AddHostedService<TelegramService>();
-serviceCollection.Services.AddScoped<IMessagePipelineService, MessagePipelineService>();
-serviceCollection.Services.AddScoped<IMessageAuthenticator, TelegramAutheticator>();
+var builder = Host.CreateApplicationBuilder(args);
+builder.Services.AddHostedService<TelegramService>();
+builder.Services.AddScoped<IMessagePipelineService, MessagePipelineService>();
+builder.Services.AddScoped<IMessageAuthenticator, TelegramAutheticator>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
-var builder = serviceCollection.Build();
-builder.Run();
+var application = builder.Build();
+application.Run();
