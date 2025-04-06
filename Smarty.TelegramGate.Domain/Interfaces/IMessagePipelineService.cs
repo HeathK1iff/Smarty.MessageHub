@@ -1,5 +1,8 @@
+using Smarty.TelegramGate.Domain.Entities;
+
 namespace Smarty.TelegramGate.Domain.Interfaces;
 
-internal interface IMessagePipelineService
+public interface IMessagePipelineService
 {
+    Task<MessageBase?> PushAsync(MessageBase message);
 }

@@ -3,10 +3,22 @@ using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Domain.Pipeline;
 
-public class MessageAuthenticationPipelineNode : IPipelineNode<MessageBase>
+public sealed class MessageAuthenticationPipelineNode : IPipelineNode<MessageBase>
 {
-    public Task<MessageBase> PushAsync(MessageBase message)
+    readonly IAuthenticatorProvider _authenticatorsService;
+    public MessageAuthenticationPipelineNode(IAuthenticatorProvider authenticatorsService)
     {
-        return Task.FromResult(message);
+        _authenticatorsService = authenticatorsService ?? throw new ArgumentNullException(nameof(authenticatorsService));
+    }
+
+    public Task<MessageBase?> PushAsync(MessageBase message)
+    {   
+        var authenticator =_authenticatorsService.Create(message.GetType());
+        if(authenticator.IsAuthenticated(message))
+        {
+            return Task.FromResult(message)!;
+        }
+
+        throw new AccessViolationException();
     }
 }

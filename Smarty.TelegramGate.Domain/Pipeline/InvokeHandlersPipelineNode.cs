@@ -3,15 +3,15 @@ using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Domain.Services;
 
-public class MessageHandlersPipelineNode : IPipelineNode<MessageBase>
+public class InvokeHandlersPipelineNode : IPipelineNode<MessageBase>
 {
     readonly IEnumerable<IMessageHandler> _handlers;
-    public MessageHandlersPipelineNode(IEnumerable<IMessageHandler> handlers)
+    public InvokeHandlersPipelineNode(IEnumerable<IMessageHandler> handlers)
     {
         _handlers = handlers;
     }
 
-    public async Task<MessageBase> PushAsync(MessageBase message)
+    public async Task<MessageBase?> PushAsync(MessageBase message)
     {
         foreach (var handler in _handlers)
         {

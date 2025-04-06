@@ -1,7 +1,17 @@
 namespace Smarty.TelegramGate.Domain.Entities;
 
-public abstract class MessageBase : EntityBase
+public class MessageBase : EntityBase
 {
-    public long SessionId { get; init; }
-    public Guid? UserId { get; init; }
+    public Guid UserId { get; init; }
+    public Dictionary<string, string> Params = new ();
+
+    protected MessageBase()
+    {
+
+    }
+
+    public static MessageBase Empty()
+    {
+        return new MessageBase();
+    }
 }

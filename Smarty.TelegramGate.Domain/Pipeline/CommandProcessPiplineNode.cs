@@ -6,27 +6,25 @@ namespace Smarty.TelegramGate.Domain.Pipeline;
 
 public class CommandProcessPiplineNode : IPipelineNode<MessageBase>
 {
-    readonly IMessageConverter _messageConverter;
+    readonly IMessageToCommandConverter _messageConverter;
     readonly IMemoryCache _memoryCache;
-    public CommandProcessPiplineNode(IMessageConverter messageConverter, 
+    public CommandProcessPiplineNode(IMessageToCommandConverter messageConverter, 
         IMemoryCache memoryCache)
     {
         _messageConverter = messageConverter ?? throw new ArgumentNullException(nameof(messageConverter));
         _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
     }
 
-    public Task<MessageBase> PushAsync(MessageBase message)
+    public Task<MessageBase?> PushAsync(MessageBase message)
     {
-        if (_messageConverter.TryToConvert(message, out var convertedMessage) && 
-            (convertedMessage is not null))
+        if (_messageConverter.TryToConvert(message, out var commandMessage) && 
+            (commandMessage is not null))
         {
-            return Task.FromResult(convertedMessage);
-        }
+            commandMessage.Previous = _memoryCache.TryGetValue<Message>(message.UserId, out var value) ? value : default;
 
-        _memoryCache.Set(message.SessionId, message, new MemoryCacheEntryOptions() {
-            SlidingExpiration = TimeSpan.FromSeconds(10)
-        });
+            return Task.FromResult<MessageBase?>(commandMessage);
+        }
         
-        return Task.FromResult(message);
+        return Task.FromResult<MessageBase?>(message);
     }
 }

@@ -3,9 +3,9 @@ using Smarty.TelegramGate.Domain.Entities;
 
 namespace Smarty.TelegramGate.Domain.Interfaces.Converters;
 
-public class MessageToCommandConverter : IMessageConverter
+public class MessageToCommandConverter : IMessageToCommandConverter
 {
-    public bool TryToConvert(MessageBase source, out MessageBase? target)
+    public bool TryToConvert(MessageBase? source, out Command? target)
     {
         target = default;
 

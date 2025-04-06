@@ -12,7 +12,7 @@ public abstract class PipelineBase<T>: IPipelineNode<T>
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     }
     
-    public async Task<T> PushAsync(T message)
+    public async Task<T?> PushAsync(T message)
     {
         var node = s_nodes.First;
         T? piplineMessage = message; 
