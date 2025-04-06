@@ -8,7 +8,7 @@ public sealed class MessagePipelineService : PipelineBase<MessageBase>, IMessage
 {
     public MessagePipelineService(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        Register<MessageAuthenticationPipelineNode>();
+        Register<AuthenticationPipelineNode>();
         Register<CommandProcessPiplineNode>();
         Register<InvokeHandlersPipelineNode>();
         Register<StoreMessagePipelineNode>();

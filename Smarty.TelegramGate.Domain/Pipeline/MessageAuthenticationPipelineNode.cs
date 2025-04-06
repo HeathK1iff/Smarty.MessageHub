@@ -3,10 +3,10 @@ using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Domain.Pipeline;
 
-public sealed class MessageAuthenticationPipelineNode : IPipelineNode<MessageBase>
+public sealed class AuthenticationPipelineNode : IPipelineNode<MessageBase>
 {
     readonly IAuthenticatorProvider _authenticatorsService;
-    public MessageAuthenticationPipelineNode(IAuthenticatorProvider authenticatorsService)
+    public AuthenticationPipelineNode(IAuthenticatorProvider authenticatorsService)
     {
         _authenticatorsService = authenticatorsService ?? throw new ArgumentNullException(nameof(authenticatorsService));
     }

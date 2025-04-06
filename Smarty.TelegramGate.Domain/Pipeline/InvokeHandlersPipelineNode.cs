@@ -15,10 +15,7 @@ public class InvokeHandlersPipelineNode : IPipelineNode<MessageBase>
     {
         foreach (var handler in _handlers)
         {
-            if (!await handler.HandleMessageAsync(message))
-            {
-                break;
-            } 
+            await handler.HandleMessageAsync(message);
         }
 
         return message;
