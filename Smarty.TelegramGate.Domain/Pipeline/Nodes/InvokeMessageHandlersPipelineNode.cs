@@ -2,12 +2,12 @@ using Smarty.TelegramGate.Domain.Entities;
 using Smarty.TelegramGate.Domain.Exceptions;
 using Smarty.TelegramGate.Domain.Interfaces;
 
-namespace Smarty.TelegramGate.Domain.Services;
+namespace Smarty.TelegramGate.Domain.Pipeline.Nodes;
 
-public class InvokeHandlersPipelineNode : IPipelineNode<MessageBase>
+public sealed class InvokeMessageHandlersPipelineNode : IPipelineNode
 {
     readonly IEnumerable<IMessageHandler> _handlers;
-    public InvokeHandlersPipelineNode(IEnumerable<IMessageHandler> handlers)
+    public InvokeMessageHandlersPipelineNode(IEnumerable<IMessageHandler> handlers)
     {
         _handlers = handlers;
     }
@@ -22,7 +22,7 @@ public class InvokeHandlersPipelineNode : IPipelineNode<MessageBase>
 
         if (!handled)
         {
-            throw new NotFoundHandlerException(message);
+            //throw new Exception();
         }
 
         return message;

@@ -2,13 +2,14 @@ using Microsoft.Extensions.Caching.Memory;
 using Smarty.TelegramGate.Domain.Entities;
 using Smarty.TelegramGate.Domain.Interfaces;
 
-namespace Smarty.TelegramGate.Domain.Pipeline;
+namespace Smarty.TelegramGate.Domain.Pipeline.Nodes;
 
-public class CommandProcessPiplineNode : IPipelineNode<MessageBase>
+public sealed class CommandProcessPipelineNode : IPipelineNode
 {
     readonly IMessageToCommandConverter _messageConverter;
     readonly IMemoryCache _memoryCache;
-    public CommandProcessPiplineNode(IMessageToCommandConverter messageConverter, 
+
+    public CommandProcessPipelineNode(IMessageToCommandConverter messageConverter, 
         IMemoryCache memoryCache)
     {
         _messageConverter = messageConverter ?? throw new ArgumentNullException(nameof(messageConverter));
@@ -20,8 +21,11 @@ public class CommandProcessPiplineNode : IPipelineNode<MessageBase>
         if (_messageConverter.TryToConvert(message, out var commandMessage) && 
             (commandMessage is not null))
         {
-            commandMessage.Previous = _memoryCache.TryGetValue<Message>(message.UserId, out var value) ? value : default;
-
+            if (message.UserId.HasValue)
+            {
+                commandMessage.Previous = _memoryCache.TryGetValue<MessageBase>(message.UserId.Value, out var value) ? value : default;
+            }
+            
             return Task.FromResult<MessageBase?>(commandMessage);
         }
         

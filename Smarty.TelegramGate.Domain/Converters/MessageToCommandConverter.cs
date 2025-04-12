@@ -9,12 +9,7 @@ public class MessageToCommandConverter : IMessageToCommandConverter
     {
         target = default;
 
-        if (source is not Message message)
-        {
-            return false;
-        }
-
-        string body = message.Body?.Trim() ?? string.Empty;
+        string body = source?.Body?.Trim() ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(body))
         {
@@ -22,14 +17,14 @@ public class MessageToCommandConverter : IMessageToCommandConverter
         }
 
 
-        var match = Regex.Match(body, @"^\/(\w+)\s(.+)$");
+        var match = Regex.Match(body, @"^\#(\w+)(\s(.+))?$");
 
         if (!match.Success)
         {
             return false;
         }
 
-        target = new Command() 
+        target = new Command(source) 
         {
             CommandName = match.Groups[1].Value,
             Params = match.Groups[2].Value.Split(' ')

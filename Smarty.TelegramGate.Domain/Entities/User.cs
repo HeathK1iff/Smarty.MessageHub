@@ -1,6 +1,4 @@
-using Smarty.TelegramGate.Domain.Entities;
-
-namespace Smarty.TelegramGate.Domain.Repositories;
+namespace Smarty.TelegramGate.Domain.Entities;
 
 public sealed class User : EntityBase
 {

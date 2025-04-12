@@ -1,6 +1,6 @@
 using Smarty.TelegramGate.Domain.Entities;
 
-namespace Smarty.TelegramGate.Domain.Services;
+namespace Smarty.TelegramGate.Domain.Interfaces;
 
 public interface IMessageHandler
 {

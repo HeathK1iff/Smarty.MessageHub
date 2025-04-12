@@ -10,7 +10,7 @@ public sealed class AuthenticatorProvider : IAuthenticatorProvider
     {
         foreach (var authenticator in authenticators)
         {
-            _authenticators.Add(authenticator.GetType(), authenticator);
+            _authenticators.Add(authenticator.GetMessageType(), authenticator);
         }
     }
 

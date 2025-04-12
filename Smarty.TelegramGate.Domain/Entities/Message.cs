@@ -1,7 +1,11 @@
 namespace Smarty.TelegramGate.Domain.Entities;
 
-public class Message : MessageBase
+public enum RecipientType { Telegram }
+
+public sealed class Message : MessageBase
 {
-    public string? Body { get; init; }
-    public DateTime Created { get; } = DateTime.UtcNow;  
+    public Message(MessageBase messageBase) : base(messageBase)
+    {       
+
+    }
 }
