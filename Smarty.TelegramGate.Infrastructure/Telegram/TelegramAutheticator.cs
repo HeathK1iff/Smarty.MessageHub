@@ -10,14 +10,13 @@ namespace Smarty.TelegramGate.Infrastructure
             return typeof(TelegramMessage);
         }
 
-        public bool IsAuthenticated(MessageBase message, out Guid? userId)
+        public bool IsAuthenticated(MessageBase message, out Guid sessionId)
         {
-            userId = default;
+            sessionId = default;
 
             if (message is TelegramMessage)
             {
-                userId = Guid.NewGuid();
-                
+                sessionId = Guid.NewGuid();
                 return true;
             }
             

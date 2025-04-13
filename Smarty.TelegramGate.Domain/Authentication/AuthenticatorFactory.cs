@@ -3,10 +3,10 @@ using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Domain.Services;
 
-public sealed class AuthenticatorProvider : IAuthenticatorProvider
+public sealed class AuthenticatorFactory : IAuthenticatorFactory
 {
     readonly Dictionary<Type,IMessageAuthenticator> _authenticators = new();
-    public AuthenticatorProvider(IEnumerable<IMessageAuthenticator> authenticators)
+    public AuthenticatorFactory(IEnumerable<IMessageAuthenticator> authenticators)
     {
         foreach (var authenticator in authenticators)
         {

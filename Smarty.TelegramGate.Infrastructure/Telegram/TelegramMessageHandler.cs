@@ -1,16 +1,19 @@
+using Microsoft.Extensions.Configuration;
 using Smarty.TelegramGate.Domain.Entities;
+using Smarty.TelegramGate.Domain.Exceptions;
 using Smarty.TelegramGate.Domain.Interfaces;
+using Smarty.TelegramGate.Domain.Utils;
 using Telegram.Bot;
 
 namespace Smarty.TelegramGate.Infrastructure;
 
 public class TelegramMessageHandler : IMessageHandler
 {
-    readonly TelegramBotClient _client;
+    readonly IConfiguration _configuration;
     
-    public TelegramMessageHandler()
+    public TelegramMessageHandler(IConfiguration configuration)
     {
-        _client = new TelegramBotClient("");
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration)); 
     }
     
     public Task<bool> HandleMessageAsync(MessageBase message)
@@ -19,11 +22,22 @@ public class TelegramMessageHandler : IMessageHandler
         {
             return Task.FromResult(false);
         }
+        
+        if (message is ResponseMessage responseMessage &&
+            MessageUtils.TryExtractMessage<TelegramMessage>(responseMessage, out var telegramMessage))
+        {
+            var telegramConnectionString = _configuration.GetConnectionString("Telegram");
+            
+            if (telegramConnectionString is null)
+            {
+                throw new InvalidConfigurationException("Telegram client is not configured");
+            }
 
-        if (message.CustomProperties.TryGetValue("telegram_chat_id", out var sChatId) ?
-           long.TryParse(sChatId, out long chatId) : false)
-        {        
-            _client.SendMessage(chatId, message.Body); 
+            if (telegramMessage is not null)
+            {
+                var _client = new TelegramBotClient(telegramConnectionString);
+                _client.SendMessage(telegramMessage.ChatId, responseMessage.Message);
+            }
         }
 
         return Task.FromResult(true);

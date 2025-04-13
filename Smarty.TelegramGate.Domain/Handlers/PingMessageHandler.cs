@@ -13,19 +13,19 @@ public class AddNotesMessageHandler : IMessageHandler
 
     public async Task<bool> HandleMessageAsync(MessageBase message)
     {
-        if (message is not Command command)
+        if (message is not CommandMessage command)
         {
             return false;
         }
 
-        if (string.Equals(command.CommandName, "ping", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(command.Name, "ping", StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }
 
-        await _messagePipelineService.PushAsync(new Message(command)
+        await _messagePipelineService.PushAsync(new ResponseMessage(message)
         {
-            Body = "pong"
+            Message = "pong"
         });
 
         return true;

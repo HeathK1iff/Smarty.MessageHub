@@ -44,20 +44,4 @@ namespace Smarty.TelegramGate.Infrastructure
             });            
         }
     }
-
-
-    // public class TelegramMessageSender : IMessageSender
-    // {
-    //     TelegramBotClient _client;
-        
-    //     public TelegramMessageSender()
-    //     {
-    //         _client = new TelegramBotClient("");    
-    //     }
-
-    //     public Task SendAsync(MessageBase message)
-    //     {
-    //         _client.SendMessage()
-    //     }
-    // }
 }
