@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Smarty.TelegramGate.Domain.Entities;
+using Smarty.TelegramGate.Domain.Exceptions;
 using Smarty.TelegramGate.Domain.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
@@ -23,7 +24,14 @@ namespace Smarty.TelegramGate.Infrastructure
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _client = new TelegramBotClient("", cancellationToken: stoppingToken);
+            var token = _configuration.GetConnectionString("Telegram") ?? string.Empty;
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                throw new InvalidConfigurationException();
+            }
+
+            _client = new TelegramBotClient(token, cancellationToken: stoppingToken);
             _client.OnMessage += new TelegramBotClient.OnMessageHandler(OnMessage);
             
             return Task.CompletedTask;
