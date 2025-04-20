@@ -1,9 +1,11 @@
+using Smarty.TelegramGate.Domain.Interfaces;
+
 namespace Smarty.TelegramGate.Domain.Entities;
 
-public sealed class ResponseMessage : MessageContainer
+public sealed class ResponseMessage : MessageContainer, IMessageData
 {
-    public required string Message { get; set; }
-    
+    public string? MessageData { get; set; }
+
     public ResponseMessage(MessageBase source) : base(source)
     {
     }

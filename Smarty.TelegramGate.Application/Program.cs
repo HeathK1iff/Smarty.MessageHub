@@ -15,10 +15,11 @@ builder.Services.AddScoped<IMessagePipelineStrategy, MessagePipelineStrategy>();
 builder.Services.AddTransient<CommandProcessPipelineNode>();
 builder.Services.AddTransient<AutheticationPipelineNode>();
 builder.Services.AddTransient<InvokeMessageHandlersPipelineNode>();
+builder.Services.AddTransient<InvokeMessageSendersPipelineNode>();
 builder.Services.AddTransient<StoreLastMessagePipelineNode>();
 builder.Services.AddTransient<ICommandParcer, CommandParcer>();
 builder.Services.AddTransient<IMessageHandler, AddNotesMessageHandler>();
-builder.Services.AddTransient<IMessageHandler, TelegramMessageHandler>();
+builder.Services.AddTransient<IMessageSender, TelegramMessageHandler>();
 
 builder.Services.AddScoped<IMessageAuthenticator, TelegramAutheticator>();
 builder.Services.AddTransient<IAuthenticatorFactory, AuthenticatorFactory>();

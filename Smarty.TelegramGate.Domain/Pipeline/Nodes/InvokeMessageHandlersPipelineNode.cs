@@ -1,5 +1,4 @@
 using Smarty.TelegramGate.Domain.Entities;
-using Smarty.TelegramGate.Domain.Exceptions;
 using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Domain.Pipeline.Nodes;

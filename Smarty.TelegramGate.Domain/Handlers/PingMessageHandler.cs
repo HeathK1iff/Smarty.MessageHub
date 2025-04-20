@@ -18,14 +18,14 @@ public class AddNotesMessageHandler : IMessageHandler
             return false;
         }
 
-        if (string.Equals(command.Name, "ping", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(command.Name, "ping", StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }
 
         await _messagePipelineService.PushAsync(new ResponseMessage(message)
         {
-            Message = "pong"
+            MessageData = "pong"
         });
 
         return true;

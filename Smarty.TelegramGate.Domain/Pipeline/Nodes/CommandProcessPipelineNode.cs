@@ -24,7 +24,7 @@ public sealed class CommandProcessPipelineNode : IPipelineNode
             return Task.FromResult<MessageBase?>(message); 
         }
 
-        if (_commandParcer.TryToParce(msg?.Body ?? string.Empty, out var command) )
+        if (_commandParcer.TryToParce(msg?.MessageData ?? string.Empty, out var command) )
         {
             if (!MessageUtils.TryGetSessionId(message, out var sessionId))
             {

@@ -16,7 +16,7 @@ public class MessagePipelineStrategy : IMessagePipelineStrategy
         }
         else
         {
-            registrator.RegisterNode<InvokeMessageHandlersPipelineNode>();
+            registrator.RegisterNode<InvokeMessageSendersPipelineNode>();
         }
     }
         

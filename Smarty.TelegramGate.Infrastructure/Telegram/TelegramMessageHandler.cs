@@ -7,39 +7,65 @@ using Telegram.Bot;
 
 namespace Smarty.TelegramGate.Infrastructure;
 
-public class TelegramMessageHandler : IMessageHandler
+public class TelegramMessageHandler : IMessageSender
 {
     readonly IConfiguration _configuration;
-    
+
     public TelegramMessageHandler(IConfiguration configuration)
     {
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration)); 
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     }
-    
-    public Task<bool> HandleMessageAsync(MessageBase message)
+
+    public async Task<bool> SendAsync(MessageBase message)
     {
-        if (message is not Message)
+        if (!TryExtractTelegramMessage(message, out var telegramMessage))
         {
-            return Task.FromResult(false);
-        }
-        
-        if (message is ResponseMessage responseMessage &&
-            MessageUtils.TryExtractMessage<TelegramMessage>(responseMessage, out var telegramMessage))
-        {
-            var telegramConnectionString = _configuration.GetConnectionString("Telegram");
-            
-            if (telegramConnectionString is null)
-            {
-                throw new InvalidConfigurationException("Telegram client is not configured");
-            }
-
-            if (telegramMessage is not null)
-            {
-                var _client = new TelegramBotClient(telegramConnectionString);
-                _client.SendMessage(telegramMessage.ChatId, responseMessage.Message);
-            }
+            return false;
         }
 
-        return Task.FromResult(true);
+        var telegramConnectionString = _configuration.GetConnectionString("Telegram");
+
+        if (telegramConnectionString is null)
+        {
+            throw new InvalidConfigurationException("Telegram client is not configured");
+        }
+
+
+        var _client = new TelegramBotClient(telegramConnectionString);
+
+        if (string.IsNullOrWhiteSpace(telegramMessage!.MessageData))
+        {
+            return false;
+        }
+
+        await _client.SendMessage(telegramMessage!.ChatId, telegramMessage!.MessageData);
+
+        return true;
+    }
+
+    protected bool TryExtractTelegramMessage(MessageBase messageBase, out TelegramMessage? message)
+    {
+        message = default;
+
+        if (messageBase is TelegramMessage telegramMessage)
+        {
+            message = telegramMessage;
+            return true;
+        }
+
+        if (MessageUtils.TryExtractMessage<TelegramMessage>(messageBase, out var sourceMessage) &&
+            sourceMessage is not null &&
+            messageBase is IMessageData bodyMessage)
+        {
+            message = new TelegramMessage()
+            {
+                ChatId = sourceMessage.ChatId,
+                MessageData = bodyMessage.MessageData
+            };
+
+            return true;
+        }
+
+        return false;
     }
 }

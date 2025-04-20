@@ -48,7 +48,7 @@ namespace Smarty.TelegramGate.Infrastructure
                 FirstName = msg.Chat.FirstName,
                 LastName = msg.Chat.LastName,
                 UserName = msg.Chat.Username,
-                Body = msg.Text
+                MessageData = msg.Text
             });            
         }
     }

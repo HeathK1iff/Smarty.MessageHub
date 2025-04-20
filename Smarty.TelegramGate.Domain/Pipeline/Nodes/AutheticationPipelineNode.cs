@@ -34,7 +34,7 @@ public sealed class AutheticationPipelineNode : IPipelineNode
         
         await _messagePipelineService.PushAsync(new ResponseMessage(message)
         {
-                Message = "You are not autheticated"
+            MessageData = "You are not autheticated"
         });
         
         return null;

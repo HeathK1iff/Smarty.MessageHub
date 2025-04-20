@@ -15,14 +15,14 @@ public class MessageUtilsTests
             new AuthenticatedMessage(
                 new Message()
                 {
-                    Body = "test"
+                    MessageData = "test"
                 })
                 {
                     SessionId = expectedId
                 }
             )
             {
-                Message = "Test"
+                MessageData = "Test"
             };
         
         bool result = MessageUtils.TryGetSessionId(messageChain, out var actualId); 
@@ -38,10 +38,10 @@ public class MessageUtilsTests
         var messageChain = new ResponseMessage(
                 new Message()
                 {
-                    Body = "test"
+                    MessageData = "test"
                 })
             {
-                Message = "Test"
+                MessageData = "Test"
             };
         
         bool result = MessageUtils.TryGetSessionId(messageChain, out var actualId); 
@@ -54,7 +54,7 @@ public class MessageUtilsTests
     {
         var expectedMessage = new Message()
         {
-            Body = "test"
+            MessageData = "test"
         };
 
         var messageChain = new ResponseMessage(
@@ -64,7 +64,7 @@ public class MessageUtilsTests
                 }
             )
             {
-                Message = "Test"
+                MessageData = "Test"
             };
         
         bool result = MessageUtils.TryExtractMessage<Message>(messageChain, out var actualMessage); 

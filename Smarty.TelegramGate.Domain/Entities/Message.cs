@@ -1,6 +1,8 @@
+using Smarty.TelegramGate.Domain.Interfaces;
+
 namespace Smarty.TelegramGate.Domain.Entities;
 
-public class Message : MessageBase
+public class Message : MessageBase, IMessageData
 {
-    public string? Body { get; init; }
+    public string? MessageData { get; init; }
 }
