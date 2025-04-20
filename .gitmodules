@@ -1,3 +1,6 @@
 [submodule "Smarty.TelegramGate.Domain/EventBus"]
 	path = Smarty.TelegramGate.Domain/EventBus
 	url = git@github.com:HeathK1iff/Smarty.Shared.EventBus.Abstractions.git
+[submodule "Smarty.TelegramGate.Infrastructure/EventBus"]
+	path = Smarty.TelegramGate.Infrastructure/EventBus
+	url = git@github.com:HeathK1iff/Smarty.Shared.EventBus.git
