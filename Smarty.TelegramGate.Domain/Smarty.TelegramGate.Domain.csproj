@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Smarty.Shared\EventBus\Smarty.Shared.EventBus.csproj" />
+  </ItemGroup>
+
 </Project>

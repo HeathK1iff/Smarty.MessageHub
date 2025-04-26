@@ -1,5 +1,6 @@
 using MessagePack;
 using Microsoft.Extensions.Caching.Distributed;
+using Smarty.Shared.EventBus.Abstractions.Events;
 using Smarty.Shared.EventBus.Abstractions.Interfaces;
 using Smarty.TelegramGate.Domain.Entities;
 using Smarty.TelegramGate.Domain.Events;
@@ -7,7 +8,7 @@ using Smarty.TelegramGate.Domain.Interfaces;
 
 namespace Smarty.TelegramGate.Infrastructure.Handlers;
 
-public sealed class UserAddEventHandler : IEventHandler<UserAddEvent>
+public sealed class UserAddEventHandler : IEventHandler
 {
     readonly IUsersRepository _usersRepository;
     readonly IDistributedCache _destributedCache;
@@ -18,14 +19,14 @@ public sealed class UserAddEventHandler : IEventHandler<UserAddEvent>
         _destributedCache = destributedCache ?? throw new ArgumentNullException(nameof(destributedCache));
     }
 
-    public async Task ReceivedAsync(UserAddEvent @event, CancellationToken cancellationToken)
+    public async Task ReceivedAsync(EventBase @event, CancellationToken cancellationToken)
     {
-        if (@event is null)
+        if (@event is not UserAddEvent userAddEvent)
         {
             return;
         }
 
-        string key = @event.CacheObjectId.ToString() ?? string.Empty;
+        string key = userAddEvent.CacheObjectId.ToString() ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(key))
         {

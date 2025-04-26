@@ -20,6 +20,6 @@ public class EventBusService : BackgroundService
     {
         var subscriber = await _eventBusConnection.CreateSubscriberAsync(stoppingToken);
         IEventHandler eventHandler = _serviceProvider.GetRequiredService<UserAddEventHandler>();
-        subscriber.Subscribe(typeof(UserAddEvent), eventHandler);
+        await subscriber.Subscribe(typeof(UserAddEvent), eventHandler);
     }
 }
