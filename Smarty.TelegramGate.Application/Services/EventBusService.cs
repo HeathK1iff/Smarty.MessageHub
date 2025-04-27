@@ -19,7 +19,6 @@ public class EventBusService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var subscriber = await _eventBusConnection.CreateSubscriberAsync(stoppingToken);
-        IEventHandler eventHandler = _serviceProvider.GetRequiredService<UserAddEventHandler>();
-        await subscriber.Subscribe(typeof(UserAddEvent), eventHandler);
+        await subscriber.Subscribe(typeof(UserAddEvent), typeof(UserAddEventHandler));
     }
 }
