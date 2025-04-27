@@ -10,10 +10,10 @@ namespace Smarty.TelegramGate.Infrastructure.Handlers;
 
 public sealed class UserAddEventHandler : IEventHandler
 {
-    readonly IUsersRepository _usersRepository;
+    readonly IUserRepository _usersRepository;
     readonly IDistributedCache _destributedCache;
 
-    public UserAddEventHandler(IUsersRepository usersRepository, IDistributedCache destributedCache)
+    public UserAddEventHandler(IUserRepository usersRepository, IDistributedCache destributedCache)
     {
         _usersRepository = usersRepository ?? throw new ArgumentNullException(nameof(usersRepository));
         _destributedCache = destributedCache ?? throw new ArgumentNullException(nameof(destributedCache));
@@ -52,7 +52,7 @@ public sealed class UserAddEventHandler : IEventHandler
                 }).ToArray() ?? Array.Empty<UserContact>()
         };
 
-        await _usersRepository.InsertOrUpdateAsync(user);
+        _usersRepository.InsertOrUpdate(user);
     }
 
     [MessagePackObject]

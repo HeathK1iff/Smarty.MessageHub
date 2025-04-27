@@ -2,7 +2,9 @@ using Smarty.TelegramGate.Domain.Entities;
 
 namespace Smarty.TelegramGate.Domain.Interfaces;
 
-public interface IUsersRepository
+public interface IUserRepository
 {
-    Task InsertOrUpdateAsync(User user);
+    void InsertOrUpdate(User user);
+
+    User[] FindByContactInformation(string contact);
 }

@@ -6,6 +6,7 @@ namespace Smarty.TelegramGate.Infrastructure.Handlers;
 public class AddNotesMessageHandler : IMessageHandler
 {
     readonly IMessagePipelineService _messagePipelineService;
+    
     public AddNotesMessageHandler(IMessagePipelineService messagePipelineService)
     {
         _messagePipelineService = messagePipelineService;
