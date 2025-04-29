@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Smarty.TelegramGate.Application",
+            "name": "Smarty.MessageHub.Application",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "Smarty.TelegramGate.Application: build",
-            "program": "${workspaceFolder}/Smarty.TelegramGate.Application/bin/Debug/net9.0/Smarty.TelegramGate.Application.dll",
+            "preLaunchTask": "Smarty.MessageHub.Application: build",
+            "program": "${workspaceFolder}/Smarty.MessageHub.Application/bin/Debug/net9.0/Smarty.MessageHub.Application.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Smarty.TelegramGate.Application/bin/Debug/net9.0/",
+            "cwd": "${workspaceFolder}/Smarty.MessageHub.Application/bin/Debug/net9.0/",
             "stopAtEntry": false,
             "env": {
                 "DOTNET_ENVIRONMENT": "Development"
