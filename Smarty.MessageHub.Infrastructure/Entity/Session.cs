@@ -2,8 +2,7 @@ using Smarty.MessageHub.Domain.Entities;
 
 namespace Smarty.MessageHub.Infrastructure.Interfaces;
 
-public sealed class Session: EntityBase
+public sealed class Session: SessionBase
 {
-    public Guid UserId { get; set; }
-    public long SessionId { get; set; } 
+    public long ChatId { get; set; } 
 }

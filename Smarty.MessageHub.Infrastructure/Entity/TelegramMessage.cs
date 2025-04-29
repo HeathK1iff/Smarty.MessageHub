@@ -1,3 +1,5 @@
+using Smarty.MessageHub.Domain.Entities.Messages;
+
 namespace Smarty.MessageHub.Domain.Entities;
 
 public class TelegramMessage : Message

@@ -3,13 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Smarty.MessageHub.Domain.Entities;
 using Smarty.MessageHub.Domain.Exceptions;
-using Smarty.MessageHub.Domain.Interfaces;
+using Smarty.MessageHub.Domain.Services;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
-namespace Smarty.MessageHub.Infrastructure;
+namespace Smarty.MessageHub.Infrastructure.Implementations.Service;
 
-public class TelegramService : BackgroundService
+public sealed class TelegramService : BackgroundService
 {
     TelegramBotClient? _client;
     readonly IServiceProvider _serviceProvider;
@@ -30,27 +30,26 @@ public class TelegramService : BackgroundService
         {
             throw new InvalidConfigurationException();
         }
-
+        
         _client = new TelegramBotClient(token, cancellationToken: stoppingToken);
-        _client.OnMessage += new TelegramBotClient.OnMessageHandler(OnMessage);
+        _client.OnMessage += async (Telegram.Bot.Types.Message msg, UpdateType type) => 
+        {
+            using var scope = _serviceProvider.CreateScope();
+
+            var eventMessageSenderService = scope.ServiceProvider.GetRequiredService<IEventMessageSender>();
+            
+            await eventMessageSenderService.SendEvent(new TelegramMessage()
+            {
+                Id = Guid.NewGuid(),
+                ChatId = msg.Chat.Id,
+                FirstName = msg.Chat.FirstName,
+                LastName = msg.Chat.LastName,
+                UserName = msg.Chat.Username,
+                Content = msg?.Text ?? string.Empty
+            }, stoppingToken);
+        };
 
         return Task.CompletedTask;
     }
-
-    private async Task OnMessage(Telegram.Bot.Types.Message msg, UpdateType type)
-    {
-        using var scope = _serviceProvider.CreateScope();
-
-        var pipelineService = scope.ServiceProvider.GetRequiredService<IMessagePipelineService>();
-
-        await pipelineService.PushAsync(new TelegramMessage()
-        {
-            Id = Guid.NewGuid(),
-            ChatId = msg.Chat.Id,
-            FirstName = msg.Chat.FirstName,
-            LastName = msg.Chat.LastName,
-            UserName = msg.Chat.Username,
-            MessageData = msg.Text
-        });
-    }
 }
+

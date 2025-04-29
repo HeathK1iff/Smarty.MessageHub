@@ -4,8 +4,7 @@ namespace Smarty.MessageHub.Domain.Interfaces;
 
 public interface IMessageAuthenticator
 {
-    Type GetMessageType();
-    bool IsAuthenticated(MessageBase message, out Guid sessionId);
+    bool IsAuthenticated(Message message, out SessionBase? sessionId);
 }
 
 

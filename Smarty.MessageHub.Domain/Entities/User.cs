@@ -15,7 +15,7 @@ public sealed class User : EntityBase
             LastName = LastName,
             Id = Id,
             UserLogin = UserLogin,
-            Contacts = Contacts.Select(a => a.Clone() as UserContact).ToArray()
+            Contacts = Contacts.Select(a => a.Clone() as UserContact).ToArray() ?? default
         };
     }
 }

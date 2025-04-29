@@ -1,6 +1,7 @@
 namespace Smarty.MessageHub.Domain.Entities;
 
-public abstract class MessageBase : EntityBase
+public abstract class Message : EntityBase
 {
-    public DateTime Created { get; init; } = DateTime.UtcNow;
+    public DateTime Created { get; init; }
+    public required string Content { get; init; }
 }

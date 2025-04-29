@@ -4,11 +4,11 @@ using Smarty.MessageHub.Infrastructure.Interfaces;
 
 namespace Smarty.MessageHub.Infrastructure;
 
-public class TelegramAutheticator : IMessageAuthenticator
+public class MessageAutheticator : IMessageAuthenticator
 {
     readonly IUserRepository _userRepository;
     readonly ISessionRepository _sessionRepository;
-    public TelegramAutheticator(IUserRepository userRepository, ISessionRepository sessionRepository)
+    public MessageAutheticator(IUserRepository userRepository, ISessionRepository sessionRepository)
     {
         _userRepository = userRepository;
         _sessionRepository = sessionRepository;
@@ -19,9 +19,9 @@ public class TelegramAutheticator : IMessageAuthenticator
         return typeof(TelegramMessage);
     }
 
-    public bool IsAuthenticated(MessageBase message, out Guid sessionId)
+    public bool IsAuthenticated(Message message, out SessionBase? session)
     {
-        sessionId = default;
+        session = default;
 
         if (message is TelegramMessage telegramMessage)
         {
@@ -31,21 +31,23 @@ public class TelegramAutheticator : IMessageAuthenticator
             {
                 var user = users.First();
 
-                if (!_sessionRepository.TryGet(user.Id, out var session))
+                if (!_sessionRepository.TryGet(user.Id, out var sessionEntity))
                 {
-                    sessionId = Guid.NewGuid();
-
-                    _sessionRepository.Add(new Session()
+                    var newSession = new Session()
                     {
-                        Id = sessionId,
-                        SessionId = telegramMessage.ChatId,
+                        Id = Guid.NewGuid(),
+                        ChatId = telegramMessage.ChatId,
                         UserId = user.Id
-                    });
+                    };
+                    
+                    _sessionRepository.Add(newSession);
+                    session = newSession;
 
                     return true;
                 }
 
-                sessionId = session?.Id ?? Guid.Empty;
+                session = sessionEntity;
+
                 return true;
             }
         }

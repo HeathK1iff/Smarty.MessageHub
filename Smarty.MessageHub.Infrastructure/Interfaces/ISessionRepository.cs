@@ -1,3 +1,5 @@
+using Smarty.MessageHub.Domain.Entities;
+
 namespace Smarty.MessageHub.Infrastructure.Interfaces;
 
 public interface ISessionRepository

@@ -4,9 +4,9 @@ using Smarty.MessageHub.Infrastructure.Interfaces;
 
 namespace Smarty.MessageHub.Infrastructure.Repository;
 
-public sealed class SessionRepository : EntityRepository<Session>, ISessionRepository
+public sealed class TelegramSessionRepository : EntityRepository<Session>, ISessionRepository
 {
-    public SessionRepository(IMemoryCache memoryCache, IConfiguration configuration) 
+    public TelegramSessionRepository(IMemoryCache memoryCache, IConfiguration configuration) 
         : base(memoryCache, 
         configuration?.GetConnectionString("SessionsDb") ?? throw new ArgumentException(nameof(configuration)))
     {

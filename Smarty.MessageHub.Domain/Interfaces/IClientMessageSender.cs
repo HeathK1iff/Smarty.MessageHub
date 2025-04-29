@@ -2,7 +2,7 @@ using Smarty.MessageHub.Domain.Entities;
 
 namespace Smarty.MessageHub.Domain.Interfaces;
 
-public interface IMessageSender
+public interface IClientMessageSender
 {
-    Task<bool> SendAsync(MessageBase message);
+    Task SendAsync(ClientMessage message);
 }
